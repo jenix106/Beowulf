@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections;
 using ThunderRoad;
 using UnityEngine;
 
@@ -49,7 +44,7 @@ namespace Beowulf
         {
             if(collisionInstance.targetColliderGroup?.collisionHandler?.ragdollPart != null && collisionInstance.targetColliderGroup.collisionHandler.ragdollPart is RagdollPart part)
             {
-                if (item.rb.velocity.magnitude >= item.data.damagers[0].damagerData.dismembermentMinVelocity && item.data.damagers[0].damagerData.dismembermentAllowed &&
+                if (item.physicBody.velocity.magnitude >= item.data.damagers[0].damagerData.dismembermentMinVelocity && item.data.damagers[0].damagerData.dismembermentAllowed &&
                     part.sliceAllowed && item.mainHandler.playerHand.controlHand.alternateUsePressed)
                 {
                     part.ragdoll.TrySlice(part);
@@ -112,9 +107,9 @@ namespace Beowulf
             if (DisableCollision)
             {
                 Player.local.locomotion.rb.detectCollisions = false;
-                item.rb.detectCollisions = false;
-                item.mainHandler.rb.detectCollisions = false;
-                item.mainHandler.otherHand.rb.detectCollisions = false;
+                item.physicBody.rigidBody.detectCollisions = false;
+                item.mainHandler.physicBody.rigidBody.detectCollisions = false;
+                item.mainHandler.otherHand.physicBody.rigidBody.detectCollisions = false;
             }
             yield return new WaitForSeconds(DashTime);
             if (DisableGravity)
@@ -122,9 +117,9 @@ namespace Beowulf
             if (DisableCollision)
             {
                 Player.local.locomotion.rb.detectCollisions = true;
-                item.rb.detectCollisions = true;
-                item.mainHandler.rb.detectCollisions = true;
-                item.mainHandler.otherHand.rb.detectCollisions = true;
+                item.physicBody.rigidBody.detectCollisions = true;
+                item.mainHandler.physicBody.rigidBody.detectCollisions = true;
+                item.mainHandler.otherHand.physicBody.rigidBody.detectCollisions = true;
             }
             if (StopOnEnd) Player.local.locomotion.rb.velocity = Vector3.zero;
             Player.fallDamage = fallDamage;
